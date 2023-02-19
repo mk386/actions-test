@@ -5,6 +5,8 @@ permissions:
 
 jobs:
   prepare:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.get-version.outputs.version }}
