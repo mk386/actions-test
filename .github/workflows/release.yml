@@ -68,7 +68,7 @@ jobs:
       - name: Get Changelog
         run: |
           echo "changelog<<EOF" >> $GITHUB_ENV
-          { python devscripts/make_changelog.py -vv > $GITHUB_ENV; } 2>&1 || true
+          { python devscripts/make_changelog.py -vv >> $GITHUB_ENV ; } 2>&1 || true
           echo "EOF" >> $GITHUB_ENV
       - name: Make Update spec
         run: |
