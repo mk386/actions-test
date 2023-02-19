@@ -1,54 +1,36 @@
-name: Release
-on: workflow_dispatch
+name: Release (nightly)
+on:
+  push:
+    branches:
+      # - 'master'
+      # TODO: remove
+      - "main"
+    paths:
+      - "yt_dlp/**.py"
+      - "!yt_dlp/version.py"
+concurrency:
+  group: release-nightly
+  cancel-in-progress: true
 permissions:
   contents: read
 
 jobs:
   prepare:
-    permissions:
-      contents: write
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.get-version.outputs.version }}
-      head_sha: ${{ steps.push_release.outputs.head_sha }}
+      version: ${{ steps.version.outputs.version }}
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-
-      - name: Get version
-        id: get-version
-        run: echo "version=$(date --utc +"%Y.%m.%d")" >> "$GITHUB_OUTPUT"
-
-      - name: Update version
-        run: |
-          python devscripts/update-version.py ${{ steps.get-version.outputs.version }}
-          # make issuetemplates
-
-      - name: Push to release
-        id: push_release
-        run: |
-          git config --global user.name github-actions
-          git config --global user.email github-actions@example.com
-          git add -u
-          git commit -m "[version] update" -m "Created by: ${{ github.event.sender.login }}" -m ":ci skip all :ci run dl"
-          git push origin --force ${{ github.event.ref }}:release
-          echo "head_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-
-      - name: Update master
-        if: ${{ vars.PUSH_VERSION_COMMIT != '' }}
-        run: git push origin ${{ github.event.ref }}
+      - name: Set version
+        id: version
+        run: echo "version=$(date --utc +"%Y.%m.%d.%H%M%S")" >> "$GITHUB_OUTPUT"
 
   build:
     needs: prepare
     uses: ./.github/workflows/build.yml
     with:
       version: ${{ needs.prepare.outputs.version }}
+      channel: nightly
 
   release:
     runs-on: ubuntu-latest
@@ -80,13 +62,22 @@ jobs:
           sha256sum * > ../SHA2-256SUMS
           sha512sum * > ../SHA2-512SUMS
 
+      - name: Prune
+        run: |
+          gh release delete -y "nightly" || true
+          git push --delete origin "nightly" || true
+          git tag --delete "nightly" || true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
       - name: Publish Release
         uses: yt-dlp/action-gh-release@v1
         with:
-          tag_name: ${{ needs.prepare.outputs.version }}
-          name: yt-dlp ${{ needs.prepare.outputs.version }}
-          target_commitish: ${{ needs.prepare.outputs.head_sha }}
+          tag_name: nightly
+          name: yt-dlp nightly ${{ needs.prepare.outputs.version }}
           body: |
+            **This is an automated prerelease build**
+
             #### A description of the various files are in the [README](https://github.com/yt-dlp/yt-dlp#release-files)
 
             ---
