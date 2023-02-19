@@ -2,11 +2,11 @@ name: Release (nightly)
 on:
   push:
     branches:
-      # - 'master'
+      # - master
       # TODO: remove
-      - "main"
+      - main
     paths:
-      - "yt_dlp/**.py"
+      - "**.py"
       - "!yt_dlp/version.py"
 concurrency:
   group: release-nightly
@@ -50,7 +50,7 @@ jobs:
       - name: Get Changelog
         run: |
           echo "changelog<<EOF" >> $GITHUB_ENV
-          { python devscripts/make_changelog.py -vv > $GITHUB_ENV; } 2>&1 || true
+          { python devscripts/make_changelog.py -vv >> $GITHUB_ENV ; } 2>&1 || true
           echo "EOF" >> $GITHUB_ENV
       - name: Make Update spec
         run: |
