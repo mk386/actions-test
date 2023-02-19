@@ -24,6 +24,6 @@ jobs:
         run: |
           git tag "nightly"
           git push --tags origin
-          gh release create -p -n "some notes" -t "nightly $(date +%s)" "nightly"
+          gh release create -p -n "some notes" -t "1.0.1-nightly+$(date +%s)" "nightly"
         env:
           GITHUB_TOKEN: ${{ github.token }}
