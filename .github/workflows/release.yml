@@ -47,6 +47,8 @@ jobs:
   build:
     needs: prepare
     uses: ./.github/workflows/build.yml
+    with:
+      version: ${{ needs.prepare.outputs.version }}
 
   release:
     runs-on: ubuntu-latest
