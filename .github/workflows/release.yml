@@ -16,6 +16,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Prune old nightly
+        if: false
         run: |
           nightly_tag=$(git describe --contains --abbrev=0 --exclude "nightly" "$(git log -1 --format="%H" "nightly" || true)" || true)
           [[ "${nightly_tag}" ]] && gh release delete -y "${nightly_tag}" || true
