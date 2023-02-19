@@ -20,12 +20,14 @@ jobs:
           nightly_tag=$(git describe --contains --abbrev=0 --exclude "nightly" "${nightly_commit}" || true)
           [[ "${nightly_tag}" ]] && gh release delete -y "${nightly_tag}" || true
           [[ "${nightly_tag}" ]] && git push --delete origin "${nightly_tag}" || true
+          git tag --delete "${nightly_tag}" || true
+          git tag --delete "nightly" || true
           git push --delete origin "nightly" || true
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Create nightly
         run: |
-          nightly_tag="$(date +"%Y.%m.%d.%s")"
+          nightly_tag="$(date -d"+1 day" +"%Y.%m.%d.%s")"
           git tag --force "nightly"
           git tag "${nightly_tag}"
           git push --tags origin
