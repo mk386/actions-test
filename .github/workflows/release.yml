@@ -56,7 +56,7 @@ jobs:
         with:
           python-version: "3.10"
 
-      - uses: ./.github/workflows/build.yml
+      - uses: ${{ github.repository }}/.github/workflows/build
         with:
           version: ${{ needs.prepare.outputs.version }}
       - uses: actions/download-artifact@v3
