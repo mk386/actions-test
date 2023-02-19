@@ -5,10 +5,10 @@ on:
       version:
         required: true
         type: string
-      pre-release:
+      channel:
         required: false
-        default: false
-        type: boolean
+        default: 'stable'
+        type: string
 
 jobs:
   build_a:
@@ -20,8 +20,8 @@ jobs:
       - name: Build pseudo step A
         run: |
           echo "Job A" >> release_job_a
-          echo "Version: ${{ inputs.version }}" >> release_job_a
-          echo "Flag   : |${{ inputs.pre-release && '--pre'}}|" >> release_job_a
+          echo "Version: |${{ inputs.version }}|" >> release_job_a
+          echo "Flag   : | -c ${{ inputs.channel }} |" >> release_job_a
           sleep 60
 
       - name: Upload artifacts
@@ -39,7 +39,7 @@ jobs:
         run: |
           echo "Job B (inverted)" >> release_job_b
           echo "Version: |${{ inputs.version }}|" >> release_job_b
-          echo "Flag   : |${{ inputs.pre-release || '--pre'}}|" >> release_job_b
+          echo "Flag   : | -c ${{ inputs.channel }} |" >> release_job_b
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
