@@ -27,7 +27,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Create nightly
         run: |
-          nightly_tag="$(date -d"+1 day" +"%Y.%m.%d-%s")"
+          nightly_tag="$(date -d"+1 day" +"%Y.%m.%d-nightly.%s")"
           git tag --force "nightly"
           git tag "${nightly_tag}"
           git push --tags origin
