@@ -15,7 +15,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Prune old nightly
         run: |
-          nightly_tag=$(git describe --contains --abbrev=0 --exclude "nightly" "$(git log -1 --format=%H "nightly" || true)" || true)
+          nightly_commit=$(git log -1 --format=%H "nightly" || true)
+          nightly_tag=$(git describe --contains --abbrev=0 --exclude "nightly" "{nightly_commit}" || true)
           [ "${nightly_tag}" ] && gh release delete -y "${nightly_tag}" || true
           [ "${nightly_tag}" ] && git push --delete origin "${nightly_tag}" || true
           git push --delete origin "nightly" || true
