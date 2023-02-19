@@ -44,25 +44,22 @@ jobs:
         if: ${{ vars.PUSH_VERSION_COMMIT != '' }}
         run: git push origin ${{ github.event.ref }}
 
+  build:
+    needs: prepare
+    uses: ./.github/workflows/build.yml
+
   release:
     runs-on: ubuntu-latest
-    needs: prepare
+    needs: build
     permissions:
       contents: write # for action-gh-release
 
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
       - uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-
-      - name: Print
-        run: echo "$PWD"
-
-      - uses: Grub4K/actions-test/.github/workflows/build.yml@main
-        with:
-          version: ${{ needs.prepare.outputs.version }}
-      - uses: actions/download-artifact@v3
 
       - name: Get Changelog
         run: |
