@@ -24,10 +24,9 @@ jobs:
         run: echo "version=$(date --utc +"%Y.%m.%d")" >> "$GITHUB_OUTPUT"
 
       - name: Update version
-        if: false
         run: |
           python devscripts/update-version.py ${{ steps.get-version.outputs.version }}
-          make issuetemplates
+          # make issuetemplates
 
       - name: Push to release
         id: push_release
