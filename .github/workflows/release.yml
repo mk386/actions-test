@@ -7,23 +7,26 @@ permissions:
   contents: write
 
 jobs:
-  publish_release:
-    name: Publish release
+  publish_nightly:
+    name: Publish nightly
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Prune old nightly
         run: |
-          gh release delete -y "nightly" || true
+          nightly_tag=$(git describe --contains --abbrev=0 --exclude "nightly" "$(git log -1 --format=%H "nightly" || true)" || true)
+          [ "${nightly_tag}" ] && gh release delete -y "${nightly_tag}" || true
+          [ "${nightly_tag}" ] && git push --delete origin "${nightly_tag}" || true
           git push --delete origin "nightly" || true
-          sleep 5s
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: Create release
+      - name: Create nightly
         run: |
+          nightly_tag="$(date +"%Y.%m.%d.%s")"
           git tag "nightly"
+          git tag "${nightly_tag}"
           git push --tags origin
-          gh release create -p -n "some notes" -t "1.0.1-nightly+$(date +%s)" "nightly"
+          gh release create -p -n "Nightly pre-release" -t "${nightly_tag}" "${nightly_tag}"
         env:
           GITHUB_TOKEN: ${{ github.token }}
