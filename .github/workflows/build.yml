@@ -1,0 +1,47 @@
+name: Build Artifacts
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+      pre-release:
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  build_a:
+    runs-on: ubuntu-latest
+    name: Build pseudo Job A
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build pseudo step A
+        run: |
+          echo "Job A" >> release_job_a
+          echo "Version: ${{ inputs.version }}" >> release_job_a
+          echo "Flag   : |${{ inputs.pre-release && '--pre'}}|" >> release_job_a
+          sleep 60
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: release_job_a
+
+  build_b:
+    runs-on: ubuntu-latest
+    name: Build pseudo Job B
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build pseudo step B
+        run: |
+          echo "Job B (inverted)" >> release_job_b
+          echo "Version: |${{ inputs.version }}|" >> release_job_b
+          echo "Flag   : |${{ inputs.pre-release || '--pre'}}|" >> release_job_b
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: release_job_b
