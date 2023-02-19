@@ -56,7 +56,10 @@ jobs:
         with:
           python-version: "3.10"
 
-      - uses: ../.github/workflows/build
+      - name: Print
+        run: echo "$PWD"
+
+      - uses: Grub4K/actions-test/.github/workflows/build.yml@main
         with:
           version: ${{ needs.prepare.outputs.version }}
       - uses: actions/download-artifact@v3
