@@ -26,7 +26,7 @@ jobs:
       - name: Create nightly
         run: |
           nightly_tag="$(date +"%Y.%m.%d.%s")"
-          git tag "nightly"
+          git tag --force "nightly"
           git tag "${nightly_tag}"
           git push --tags origin
           gh release create -p -n "Nightly pre-release" -t "${nightly_tag}" "${nightly_tag}"
