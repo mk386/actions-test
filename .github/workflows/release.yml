@@ -41,7 +41,7 @@ jobs:
           echo "head_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Update master
-        if: ${{ vars.PUSH_VERSION_COMMIT != '' }}
+        if: vars.PUSH_VERSION_COMMIT != ''
         run: git push origin ${{ github.event.ref }}
 
   build:
@@ -65,11 +65,22 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Get Changelog
+      - name: Generate release notes
         run: |
-          echo "changelog<<EOF" >> $GITHUB_ENV
-          { python devscripts/make_changelog.py -vv >> $GITHUB_ENV ; } 2>&1 || true
-          echo "EOF" >> $GITHUB_ENV
+          cat >> RELEASE_NOTES << EOF
+          **This is an automated prerelease build**"
+
+          #### A description of the various files are in the [README](https://github.com/yt-dlp/yt-dlp#release-files)"
+
+          ---
+          <details><summary><h3>Changelog</summary>
+          EOF
+          { python devscripts/make_changelog.py -vv >> RELEASE_NOTES ; } 2>&1 || true
+          cat >> RELEASE_NOTES << EOF
+
+          </details>
+          EOF
+
       - name: Make Update spec
         run: |
           echo "# This file is used for regulating self-update" >> _update_spec
@@ -86,15 +97,7 @@ jobs:
           tag_name: ${{ needs.prepare.outputs.version }}
           name: yt-dlp ${{ needs.prepare.outputs.version }}
           target_commitish: ${{ needs.prepare.outputs.head_sha }}
-          body: |
-            #### A description of the various files are in the [README](https://github.com/yt-dlp/yt-dlp#release-files)
-
-            ---
-            <details><summary><h3>Changelog</summary>
-
-            ${{ env.changelog }}
-
-            </details>
+          body_path: RELEASE_NOTES
           files: |
             SHA2-256SUMS
             SHA2-512SUMS

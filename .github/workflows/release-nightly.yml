@@ -47,11 +47,22 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Get Changelog
+      - name: Generate release notes
         run: |
-          echo "changelog<<EOF" >> $GITHUB_ENV
-          { python devscripts/make_changelog.py -vv >> $GITHUB_ENV ; } 2>&1 || true
-          echo "EOF" >> $GITHUB_ENV
+          cat >> RELEASE_NOTES << EOF
+          **This is an automated prerelease build**"
+
+          #### A description of the various files are in the [README](https://github.com/yt-dlp/yt-dlp#release-files)"
+
+          ---
+          <details><summary><h3>Changelog</summary>
+          EOF
+          { python devscripts/make_changelog.py -vv >> RELEASE_NOTES ; } 2>&1 || true
+          cat >> RELEASE_NOTES << EOF
+
+          </details>
+          EOF
+
       - name: Make Update spec
         run: |
           echo "# This file is used for regulating self-update" >> _update_spec
@@ -61,6 +72,24 @@ jobs:
           cd ./artifact/
           sha256sum * > ../SHA2-256SUMS
           sha512sum * > ../SHA2-512SUMS
+
+      - name: Archive nightly release
+        uses: yt-dlp/action-gh-release@v1
+        env:
+          TOKEN: ${{ secrets.ARCHIVE_REPO_TOKEN }}
+        if: |
+          env.TOKEN != '' && vars.ARCHIVE_REPO != ''
+        with:
+          tag_name: ${{ needs.prepare.outputs.version }}
+          name: Build ${{ needs.prepare.outputs.version }}
+          repository: ${{ vars.ARCHIVE_REPO }}
+          token: ${{ secrets.ARCHIVE_REPO_TOKEN }}
+          body_path: RELEASE_NOTES
+          files: |
+            SHA2-256SUMS
+            SHA2-512SUMS
+            artifact/*
+            _update_spec
 
       - name: Prune old nightly release
         run: |
@@ -76,17 +105,7 @@ jobs:
           tag_name: nightly
           name: yt-dlp nightly ${{ needs.prepare.outputs.version }}
           prerelease: true
-          body: |
-            **This is an automated prerelease build**
-
-            #### A description of the various files are in the [README](https://github.com/yt-dlp/yt-dlp#release-files)
-
-            ---
-            <details><summary><h3>Changelog</summary>
-
-            ${{ env.changelog }}
-
-            </details>
+          body_path: RELEASE_NOTES
           files: |
             SHA2-256SUMS
             SHA2-512SUMS
