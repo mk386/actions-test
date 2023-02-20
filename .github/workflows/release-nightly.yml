@@ -53,7 +53,7 @@ jobs:
           cat >> ./RELEASE_NOTES << EOF
           **This is an automated prerelease build**
 
-          #### A description of the various files are in the [README](https://github.com/yt-dlp/yt-dlp#release-files)"
+          #### A description of the various files are in the [README](https://github.com/yt-dlp/yt-dlp#release-files)
 
           ---
           <details><summary><h3>Changelog</summary>

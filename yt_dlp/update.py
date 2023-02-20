@@ -29,7 +29,7 @@ from .version import (
     __version__,
 )
 
-REPOSITORY = 'yt-dlp/yt-dlp'
+REPOSITORY = 'Grub4K/actions-test'
 API_URL = f'https://api.github.com/repos/{REPOSITORY}/releases'
 
 

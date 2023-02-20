@@ -9,7 +9,7 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.get-version.outputs.version }}
+      version: ${{ steps.update-version.outputs.version }}
       head_sha: ${{ steps.push_release.outputs.head_sha }}
 
     steps:
@@ -21,14 +21,11 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Get version
-        id: get-version
-        run: echo "version=$(date --utc +"%Y.%m.%d")" >> "$GITHUB_OUTPUT"
-
       - name: Update version
+        id: update-version
         run: |
-          python devscripts/update-version.py ${{ steps.get-version.outputs.version }}
-          # make issuetemplates
+          python devscripts/update-version.py | grep -Po 'Version = \K\d+\.\d+\.\d+(\.\d+)?' >> "$GITHUB_OUTPUT"
+          make issuetemplates
 
       - name: Push to release
         id: push_release
@@ -124,7 +121,7 @@ jobs:
       - name: Generate release notes
         run: |
           cat >> ./RELEASE_NOTES << EOF
-          #### A description of the various files are in the [README](https://github.com/yt-dlp/yt-dlp#release-files)"
+          #### A description of the various files are in the [README](https://github.com/yt-dlp/yt-dlp#release-files)
 
           ---
           <details><summary><h3>Changelog</summary>
