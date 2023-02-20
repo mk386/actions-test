@@ -102,6 +102,8 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       version: ${{ needs.prepare.outputs.version }}
+    permissions:
+      packages: write # For package cache
 
   publish:
     runs-on: ubuntu-latest

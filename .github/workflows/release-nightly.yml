@@ -29,6 +29,8 @@ jobs:
     with:
       version: ${{ needs.prepare.outputs.version }}
       channel: nightly
+    permissions:
+      packages: write # For package cache
 
   publish:
     runs-on: ubuntu-latest
