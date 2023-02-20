@@ -62,7 +62,7 @@ jobs:
           sha256sum * > ../SHA2-256SUMS
           sha512sum * > ../SHA2-512SUMS
 
-      - name: Prune
+      - name: Prune old nightly release
         run: |
           gh release delete -y "nightly" || true
           git push --delete origin "nightly" || true
@@ -70,11 +70,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-      - name: Publish Release
+      - name: Publish nightly release
         uses: yt-dlp/action-gh-release@v1
         with:
           tag_name: nightly
           name: yt-dlp nightly ${{ needs.prepare.outputs.version }}
+          prerelease: true
           body: |
             **This is an automated prerelease build**
 
