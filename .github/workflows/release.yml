@@ -103,6 +103,7 @@ jobs:
     with:
       version: ${{ needs.prepare.outputs.version }}
     permissions:
+      contents: read
       packages: write # For package cache
 
   publish:

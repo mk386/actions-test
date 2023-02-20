@@ -30,6 +30,7 @@ jobs:
       version: ${{ needs.prepare.outputs.version }}
       channel: nightly
     permissions:
+      contents: read
       packages: write # For package cache
 
   publish:
