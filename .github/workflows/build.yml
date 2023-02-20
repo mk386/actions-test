@@ -68,6 +68,7 @@ jobs:
 
   build_linux_arm:
     permissions:
+      contents: read
       packages: write  # for Creating cache
     runs-on: ubuntu-latest
     strategy:
