@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   prepare:
-    if: vars.BUILD_NIGHTLY == ''
+    if: vars.BUILD_NIGHTLY != ''
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.pin_version_hash.outputs.version }}
