@@ -30,7 +30,7 @@ jobs:
       version: ${{ needs.prepare.outputs.version }}
       channel: nightly
 
-  release:
+  publish:
     runs-on: ubuntu-latest
     needs: [prepare, build]
     permissions:
@@ -47,16 +47,15 @@ jobs:
 
       - name: Generate release notes
         run: |
-          cat >> RELEASE_NOTES << EOF
+          cat >> ./RELEASE_NOTES << EOF
           **This is an automated prerelease build**
 
-          #### A description of the various files are in the [README](https://github.com/yt-dlp/yt-dlp#release-files)
+          #### A description of the various files are in the [README](https://github.com/yt-dlp/yt-dlp#release-files)"
 
           ---
           <details><summary><h3>Changelog</summary>
-          EOF
-          { python devscripts/make_changelog.py -vv >> RELEASE_NOTES ; } 2>&1 || true
-          cat >> RELEASE_NOTES << EOF
+
+          $(python ./devscripts/make_changelog.py -vv)
 
           </details>
           EOF
