@@ -2,9 +2,7 @@ name: Release (nightly)
 on:
   push:
     branches:
-      # - master
-      # TODO: remove
-      - main
+      - master
     paths:
       - "**.py"
       - "!yt_dlp/version.py"
