@@ -7,7 +7,7 @@ on:
         type: string
       channel:
         required: false
-        default: 'stable'
+        default: stable
         type: string
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
           echo "Job A" >> release_job_a
           echo "Version: |${{ inputs.version }}|" >> release_job_a
           echo "Flag   : | -c ${{ inputs.channel }} |" >> release_job_a
-          sleep 60
+          sleep 5
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
