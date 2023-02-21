@@ -9,6 +9,24 @@ on:
         required: false
         default: stable
         type: string
+      unix:
+        default: true
+        type: boolean
+      linux_arm:
+        default: true
+        type: boolean
+      macos:
+        default: true
+        type: boolean
+      macos_legacy:
+        default: true
+        type: boolean
+      windows:
+        default: true
+        type: boolean
+      windows32:
+        default: true
+        type: boolean
 
   workflow_dispatch:
     inputs:
@@ -51,7 +69,7 @@ permissions:
 
 jobs:
   build_unix:
-    if: inputs.unix != false
+    if: inputs.unix
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -104,7 +122,7 @@ jobs:
           yt-dlp_linux.zip
 
   build_linux_arm:
-    if: inputs.linux_arm != false
+    if: inputs.linux_arm
     permissions:
       contents: read
       packages: write  # for Creating cache
@@ -148,7 +166,7 @@ jobs:
 
 
   build_macos:
-    if: inputs.macos != false
+    if: inputs.macos
     runs-on: macos-11
 
     steps:
@@ -177,7 +195,7 @@ jobs:
           dist/yt-dlp_macos.zip
 
   build_macos_legacy:
-    if: inputs.macos_legacy != false
+    if: inputs.macos_legacy
     runs-on: macos-latest
 
     steps:
@@ -216,7 +234,7 @@ jobs:
 
 
   build_windows:
-    if: inputs.windows != false
+    if: inputs.windows
     runs-on: windows-latest
 
     steps:
@@ -251,7 +269,7 @@ jobs:
 
 
   build_windows32:
-    if: inputs.windows32 != false
+    if: inputs.windows32
     runs-on: windows-latest
 
     steps:

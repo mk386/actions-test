@@ -981,7 +981,6 @@ def main(argv=None):
         _exit(f'\nERROR: {e}')
     except optparse.OptParseError as e:
         _exit(2, f'\n{e}')
-        ...
 
 
 from .extractor import gen_extractors, list_extractors
