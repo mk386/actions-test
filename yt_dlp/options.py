@@ -326,7 +326,7 @@ def create_parser():
         action='store_const', dest='update_self', const=CHANNEL,
         help=format_field(
             is_non_updateable(), None, 'Check if updates are available. %s',
-            default=f'Update this program to the latest {CHANNEL} version'))
+            default='Update this program to the latest version'))
     general.add_option(
         '--no-update',
         action='store_false', dest='update_self',
