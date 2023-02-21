@@ -1,6 +1,6 @@
 # flake8: noqa: F401
 
-from .youtube import (  # Youtube is moved to the top to improve performance
+from .youtube import (  # Youtube is moved to the top because it is the coolest
     YoutubeIE,
     YoutubeClipIE,
     YoutubeFavouritesIE,
