@@ -36,7 +36,7 @@ from .utils import (
     remove_end,
     write_string,
 )
-from .version import __version__
+from .version import CHANNEL, __version__
 
 
 def parseOpts(overrideArguments=None, ignore_config_files='if_override'):
@@ -323,10 +323,10 @@ def create_parser():
         help='Print program version and exit')
     general.add_option(
         '-U', '--update',
-        action='store_true', dest='update_self',
+        action='store_const', dest='update_self', const=CHANNEL,
         help=format_field(
             is_non_updateable(), None, 'Check if updates are available. %s',
-            default='Update this program to the latest version'))
+            default=f'Update this program to the latest {CHANNEL} version'))
     general.add_option(
         '--no-update',
         action='store_false', dest='update_self',
