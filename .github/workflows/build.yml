@@ -13,44 +13,38 @@ on:
   workflow_dispatch:
     inputs:
       version:
+        description: Version tag (YYYY.MM.DD[.REV])
         required: true
         type: string
-        description: The version tag like YYYY.MM.DD(.REV)
       channel:
-        required: false
+        description: Update channel (stable/nightly)
+        required: true
         default: stable
         type: string
-        description: The update channel (stable/nightly)
       unix:
-        required: false
+        description: yt-dlp, yt-dlp.tar.gz, yt-dlp_linux, yt-dlp_linux.zip
         default: true
         type: boolean
-        description: Build `yt-dlp`, `yt-dlp.tar.gz`, `yt-dlp_linux`, `yt-dlp_linux.zip`
       linux_arm:
-        required: false
+        description: yt-dlp_linux_aarch64, yt-dlp_linux_armv7l
         default: true
         type: boolean
-        description: Build `yt-dlp_linux_aarch64`, `yt-dlp_linux_armv7l`
       macos:
-        required: false
+        description: yt-dlp_macos, yt-dlp_macos.zip
         default: true
         type: boolean
-        description: Build `yt-dlp_macos`, `yt-dlp_macos.zip`
       macos_legacy:
-        required: false
+        description: yt-dlp_macos_legacy
         default: true
         type: boolean
-        description: Build `yt-dlp_macos_legacy`
       windows:
-        required: false
+        description: yt-dlp.exe, yt-dlp_min.exe, yt-dlp_win.zip
         default: true
         type: boolean
-        description: Build `yt-dlp.exe`, `yt-dlp_min.exe`, `yt-dlp_win.zip`
       windows32:
-        required: false
+        description: yt-dlp_x86.exe
         default: true
         type: boolean
-        description: Build `yt-dlp_x86.exe`
 
 permissions:
   contents: read
