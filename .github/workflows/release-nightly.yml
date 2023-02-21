@@ -101,7 +101,7 @@ jobs:
         run: |
           gh release delete -y "nightly" || true
           git push --delete origin "nightly" || true
-          git tag --delete "nightly" || true
+          sleep 5
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
