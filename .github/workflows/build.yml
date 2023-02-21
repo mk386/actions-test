@@ -304,7 +304,7 @@ jobs:
         path: |
           dist/yt-dlp_x86.exe
 
-  meta_files:
+  build_meta_files:
     if: inputs.meta_files
     needs:
       - build_unix
