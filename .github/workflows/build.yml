@@ -9,13 +9,56 @@ on:
         required: false
         default: stable
         type: string
+
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        type: string
+        description: The version tag like YYYY.MM.DD(.REV)
+      channel:
+        required: false
+        default: stable
+        type: string
+        description: The update channel (stable/nightly)
+      unix:
+        required: false
+        default: true
+        type: boolean
+        description: Build `yt-dlp`, `yt-dlp.tar.gz`, `yt-dlp_linux`, `yt-dlp_linux.zip`
+      linux_arm:
+        required: false
+        default: true
+        type: boolean
+        description: Build `yt-dlp_linux_aarch64`, `yt-dlp_linux_armv7l`
+      macos:
+        required: false
+        default: true
+        type: boolean
+        description: Build `yt-dlp_macos`, `yt-dlp_macos.zip`
+      macos_legacy:
+        required: false
+        default: true
+        type: boolean
+        description: Build `yt-dlp_macos_legacy`
+      windows:
+        required: false
+        default: true
+        type: boolean
+        description: Build `yt-dlp.exe`, `yt-dlp_min.exe`, `yt-dlp_win.zip`
+      windows32:
+        required: false
+        default: true
+        type: boolean
+        description: Build `yt-dlp_x86.exe`
+
 permissions:
   contents: read
 
 jobs:
   build_unix:
+    if: inputs.unix != 'false'
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
@@ -67,6 +110,7 @@ jobs:
           yt-dlp_linux.zip
 
   build_linux_arm:
+    if: inputs.linux_arm != 'false'
     permissions:
       contents: read
       packages: write  # for Creating cache
@@ -110,6 +154,7 @@ jobs:
 
 
   build_macos:
+    if: inputs.macos != 'false'
     runs-on: macos-11
 
     steps:
@@ -138,6 +183,7 @@ jobs:
           dist/yt-dlp_macos.zip
 
   build_macos_legacy:
+    if: inputs.macos_legacy != 'false'
     runs-on: macos-latest
 
     steps:
@@ -176,6 +222,7 @@ jobs:
 
 
   build_windows:
+    if: inputs.windows != 'false'
     runs-on: windows-latest
 
     steps:
@@ -210,6 +257,7 @@ jobs:
 
 
   build_windows32:
+    if: inputs.windows32 != 'false'
     runs-on: windows-latest
 
     steps:
