@@ -99,6 +99,11 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       version: ${{ needs.prepare.outputs.version }}
+      linux_arm: false
+      macos: false
+      macos_legacy: false
+      windows: false
+      windows32: false
     permissions:
       contents: read
       packages: write # For package cache
@@ -132,7 +137,7 @@ jobs:
           EOF
 
       - name: Publish Release
-        uses: yt-dlp/action-gh-release@v1
+        uses: yt-dlp/action-gh-release@d4e8205d7e959a9107da6396278b2f1f07af0f9b
         with:
           tag_name: ${{ needs.prepare.outputs.version }}
           name: yt-dlp ${{ needs.prepare.outputs.version }}
