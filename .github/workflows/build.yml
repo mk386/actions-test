@@ -134,6 +134,7 @@ jobs:
       contents: read
       packages: write  # for Creating cache
     runs-on: ubuntu-latest
+    concurrency: build_linux_arm
     strategy:
       matrix:
         architecture:
@@ -146,6 +147,9 @@ jobs:
         path: ./repo
     - name: Virtualized Install, Prepare & Build
       uses: yt-dlp/run-on-arch-action@v2
+      env:
+        # Ref: https://github.com/uraimo/run-on-arch-action/issues/55
+        GITHUB_WORKFLOW: Release
       with:
         githubToken: ${{ github.token }}  # To cache image
         arch: ${{ matrix.architecture }}
