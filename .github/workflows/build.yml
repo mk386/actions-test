@@ -139,7 +139,6 @@ jobs:
         architecture:
         - armv7
         - aarch64
-    concurrency: build_linux_${{ matrix.architecture }}
 
     steps:
     - uses: actions/checkout@v3
