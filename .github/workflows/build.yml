@@ -308,7 +308,7 @@ jobs:
           dist/yt-dlp_x86.exe
 
   build_meta_files:
-    if: inputs.meta_files
+    if: inputs.meta_files && always()
     needs:
       - build_unix
       - build_linux_arm
