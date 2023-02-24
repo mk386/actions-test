@@ -45,7 +45,7 @@ jobs:
 
       - name: Archive nightly release
         if: |
-          inputs.nightly && env.GITHUB_TOKEN && vars.ARCHIVE_REPO
+          inputs.nightly && env.GITHUB_TOKEN != '' && vars.ARCHIVE_REPO != ''
         env:
           GITHUB_TOKEN: ${{ secrets.ARCHIVE_REPO_TOKEN }}
         run: |
