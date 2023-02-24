@@ -99,11 +99,6 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       version: ${{ needs.prepare.outputs.version }}
-      linux_arm: false
-      macos: false
-      macos_legacy: false
-      windows: false
-      windows32: false
     permissions:
       contents: read
       packages: write # For package cache
