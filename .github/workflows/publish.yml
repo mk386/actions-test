@@ -12,6 +12,9 @@ on:
       target_commitish:
         required: true
         type: string
+    secrets:
+      ARCHIVE_REPO_TOKEN:
+        required: false
 
 permissions:
   contents: write
