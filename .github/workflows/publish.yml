@@ -32,9 +32,9 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Prerelease preface
+      - name: Add pre-release preface
         if: inputs.nightly
-        run: echo "**This is an automated prerelease build**" >> ./RELEASE_NOTES
+        run: echo "**This is an automated nightly pre-release build**" >> ./RELEASE_NOTES
 
       - name: Generate release notes
         run: |
@@ -48,13 +48,12 @@ jobs:
 
       - name: Archive nightly release
         env:
-          GITHUB_TOKEN: ${{ secrets.ARCHIVE_REPO_TOKEN }}
+          GH_TOKEN: ${{ secrets.ARCHIVE_REPO_TOKEN }}
+          GH_REPO: ${{ vars.ARCHIVE_REPO }}
         if: |
           inputs.nightly && env.GITHUB_TOKEN != '' && vars.ARCHIVE_REPO != ''
         run: |
-          gh release \
-            --repo ${{ vars.ARCHIVE_REPO }} \
-            create \
+          gh release create \
             --notes-file RELEASE_NOTES \
             --title "Build ${{ inputs.version }}" \
             ${{ inputs.version }} \
@@ -63,7 +62,7 @@ jobs:
       - name: Prune old nightly release
         if: inputs.nightly
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           gh release delete --yes --cleanup-tag "nightly" || true
           git tag --delete "nightly" || true
@@ -71,7 +70,7 @@ jobs:
 
       - name: Publish release${{ inputs.nightly && ' (nightly)' || '' }}
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           gh release create \
             --notes-file RELEASE_NOTES \
