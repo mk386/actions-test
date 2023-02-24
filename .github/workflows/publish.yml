@@ -63,10 +63,10 @@ jobs:
           git tag --delete "nightly" || true
           sleep 5  # Enough time to cover deletion race condition
 
-      - name: Publish release${{ inputs.nightly && ' (nightly)' }}
+      - name: Publish release${{ inputs.nightly && ' (nightly)' || '' }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           gh release create -F RELEASE_NOTES --target ${{ inputs.target_commitish }} \
-            -t "yt-dlp ${{ inputs.nightly && 'nightly ' }}${{ inputs.version }}" \
+            -t "yt-dlp ${{ inputs.nightly && 'nightly ' || '' }}${{ inputs.version }}" \
             ${{ inputs.nightly && '-p "nightly"' || inputs.version }} artifact/*
