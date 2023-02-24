@@ -146,10 +146,10 @@ jobs:
           path: ./repo
       - name: Virtualized Install, Prepare & Build
         uses: yt-dlp/run-on-arch-action@v2
-        env:
-          # Ref: https://github.com/uraimo/run-on-arch-action/issues/55
-          GITHUB_WORKFLOW: Release
         with:
+          # Ref: https://github.com/uraimo/run-on-arch-action/issues/55
+          env: |
+            GITHUB_WORKFLOW: release
           githubToken: ${{ github.token }} # To cache image
           arch: ${{ matrix.architecture }}
           distro: ubuntu18.04 # Standalone executable should be built on minimum supported OS
