@@ -52,15 +52,20 @@ jobs:
         if: |
           inputs.nightly && env.GITHUB_TOKEN != '' && vars.ARCHIVE_REPO != ''
         run: |
-          gh release --repo ${{ vars.ARCHIVE_REPO }} create -F RELEASE_NOTES \
-            -t "Build ${{ inputs.version }}" ${{ inputs.version }} artifact/*
+          gh release \
+            --repo ${{ vars.ARCHIVE_REPO }} \
+            create \
+            --notes-file RELEASE_NOTES \
+            --title "Build ${{ inputs.version }}" \
+            ${{ inputs.version }} \
+            artifact/*
 
       - name: Prune old nightly release
         if: inputs.nightly
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          gh release delete -y --cleanup-tag "nightly" || true
+          gh release delete --yes --cleanup-tag "nightly" || true
           git tag --delete "nightly" || true
           sleep 5  # Enough time to cover deletion race condition
 
@@ -68,6 +73,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          gh release create -F RELEASE_NOTES --target ${{ inputs.target_commitish }} \
-            -t "yt-dlp ${{ inputs.nightly && 'nightly ' || '' }}${{ inputs.version }}" \
-            ${{ inputs.nightly && '-p "nightly"' || inputs.version }} artifact/*
+          gh release create \
+            --notes-file RELEASE_NOTES \
+            --target ${{ inputs.target_commitish }} \
+            --title "yt-dlp ${{ inputs.nightly && 'nightly ' || '' }}${{ inputs.version }}" \
+            ${{ inputs.nightly && '--prerelease "nightly"' || inputs.version }} \
+            artifact/*
