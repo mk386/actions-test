@@ -106,6 +106,8 @@ jobs:
   publish:
     needs: [prepare, build]
     uses: ./.github/workflows/publish.yml
+    secrets:
+      ARCHIVE_REPO_TOKEN: ${{ secrets.ARCHIVE_REPO_TOKEN }}
     permissions:
       contents: write # for gh
     with:
