@@ -69,4 +69,4 @@ jobs:
         run: |
           gh release create -F RELEASE_NOTES --target ${{ inputs.target_commitish }} \
             -t "yt-dlp ${{ inputs.nightly && 'nightly ' }}${{ inputs.version }}" \
-            ${{ inputs.nightly && '-p "nightly"' || ${{ inputs.version }} }} artifact/*
+            ${{ inputs.nightly && '-p "nightly"' || inputs.version }} artifact/*
