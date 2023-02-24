@@ -50,8 +50,7 @@ jobs:
           inputs.nightly && env.GITHUB_TOKEN != '' && vars.ARCHIVE_REPO != ''
         run: |
           gh release --repo ${{ vars.ARCHIVE_REPO }} create -F RELEASE_NOTES \
-            --target ${{ inputs.target_commitish }} -t "Build ${{ inputs.version }}" \
-            ${{ inputs.version }} artifact/*
+            -t "Build ${{ inputs.version }}" ${{ inputs.version }} artifact/*
 
       - name: Prune old nightly release
         if: inputs.nightly
