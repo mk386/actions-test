@@ -44,7 +44,7 @@ jobs:
     secrets:
       ARCHIVE_REPO_TOKEN: ${{ secrets.ARCHIVE_REPO_TOKEN }}
     permissions:
-      contents: write # for git and gh
+      contents: write
     with:
       nightly: true
       version: ${{ needs.prepare.outputs.version }}

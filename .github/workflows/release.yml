@@ -107,8 +107,7 @@ jobs:
     needs: [prepare, build]
     uses: ./.github/workflows/publish.yml
     permissions:
-      contents: write # for gh
+      contents: write
     with:
-      nightly: false
       version: ${{ needs.prepare.outputs.version }}
       target_commitish: ${{ needs.prepare.outputs.head_sha }}

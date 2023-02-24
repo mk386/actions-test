@@ -51,7 +51,7 @@ jobs:
           GH_TOKEN: ${{ secrets.ARCHIVE_REPO_TOKEN }}
           GH_REPO: ${{ vars.ARCHIVE_REPO }}
         if: |
-          inputs.nightly && env.GITHUB_TOKEN != '' && vars.ARCHIVE_REPO != ''
+          inputs.nightly && env.GH_TOKEN != '' && env.GH_REPO != ''
         run: |
           gh release create \
             --notes-file RELEASE_NOTES \
