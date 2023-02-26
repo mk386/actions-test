@@ -1,1 +1,1 @@
-# huh?
+# gpg has a strange cli
