@@ -1,1 +1,1 @@
-# why can't i test github actions locally
+# not trustworthy
