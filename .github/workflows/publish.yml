@@ -43,7 +43,7 @@ jobs:
           EOF
           echo "**This is an automated nightly pre-release build**" >> ./PRERELEASE_NOTES
           cat ./RELEASE_NOTES >> ./PRERELEASE_NOTES
-          echo "https://github.com/${{ github.repository }}/commit/${{ inputs.target_commitish }}" >> ./ARCHIVE_NOTES
+          echo "Generated from: https://github.com/${{ github.repository }}/commit/${{ inputs.target_commitish }}" >> ./ARCHIVE_NOTES
           cat ./RELEASE_NOTES >> ./ARCHIVE_NOTES
 
       - name: Archive nightly release
