@@ -12,16 +12,17 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-import json
-import re
-import urllib.request
+# import json
+# import re
+# import urllib.request
 
-from devscripts.utils import read_file, write_file
+# from devscripts.utils import read_file, write_file
+from devscripts.utils import write_file
 
 filename, version = sys.argv[1:]
 
 normalized_version = '.'.join(str(int(x)) for x in version.split('.'))
-
+'''
 pypi_release = json.loads(urllib.request.urlopen(
     'https://pypi.org/pypi/yt-dlp/%s/json' % normalized_version
 ).read().decode())
@@ -37,3 +38,5 @@ formulae_text = re.sub(r'sha256 "[0-9a-f]*?"', 'sha256 "%s"' % sha256sum, formul
 formulae_text = re.sub(r'url "[^"]*?"', 'url "%s"' % url, formulae_text, count=1)
 
 write_file(filename, formulae_text)
+'''
+write_file(filename, normalized_version)
