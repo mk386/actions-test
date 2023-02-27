@@ -24,8 +24,8 @@ jobs:
       - name: Update version
         id: update-version
         run: |
-          python devscripts/update-version.py | grep -Po "version=\d+\.\d+\.\d+(\.\d+)?" >> "$GITHUB_OUTPUT"
-          make issuetemplates
+          python devscripts/update-version.py ${{ vars.PUSH_VERSION_COMMIT == '' && '"$(date -u +"%H%M%S")"' || '' }} | \
+            grep -Po "version=\d+\.\d+\.\d+(\.\d+)?" >> "$GITHUB_OUTPUT"
 
       - name: Push to release
         id: push_release
