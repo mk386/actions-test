@@ -120,30 +120,28 @@ class Updater:
     def __init__(self, ydl, channel_or_tag=None):
         self.ydl = ydl
 
+        exact = True
         if channel_or_tag is None:
-            self._channel = channel_or_tag = CHANNEL
-            self.latest_tag = 'latest' if CHANNEL == 'stable' else CHANNEL
-            if self._channel == 'stable':
-                self._version_field = 'tag_name'
+            exact = False
+            channel_or_tag = CHANNEL
+
+        stable_match = re.match(r'\d{4}\.\d{2}\.\d{2}', channel_or_tag)
+        if channel_or_tag in ('stable', 'latest') or stable_match:
+            self._channel = 'stable'
+            self.latest_tag = f'tags/{channel_or_tag}' if stable_match else 'latest'
+            self._version_field = 'tag_name'
+            if exact:
+                self._version_compare = lambda a, b: version_tuple(a) == version_tuple(b)
+            else:
                 self._version_compare = lambda a, b: version_tuple(a) >= version_tuple(b)
-                self.current_version = __version__
-                return
-
-        if re.match(r'\d{4}(\.\d{2}){2}', channel_or_tag):
-            self._channel = 'stable'
-            self.latest_tag = f'tags/{channel_or_tag}'
-
-        elif channel_or_tag in ('stable', 'latest'):
-            self._channel = 'stable'
-            self.latest_tag = 'latest'
+            self.current_version = __version__
 
         else:
             self._channel = channel_or_tag
             self.latest_tag = f'tags/{channel_or_tag}'
-
-        self._version_field = 'target_commitish'
-        self._version_compare = lambda a, b: a == b
-        self.current_version = RELEASE_GIT_HEAD
+            self._version_field = 'target_commitish'
+            self._version_compare = lambda a, b: a == b
+            self.current_version = RELEASE_GIT_HEAD
 
     @functools.cached_property
     def _tag(self):
