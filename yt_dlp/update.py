@@ -269,7 +269,7 @@ class Updater:
                     self.ydl.report_warning(msg)
                 return
         except Exception as err:
-            return self._report_network_error(f'obtain version info ({err})', delim=f'; Please try again later or')
+            return self._report_network_error(f'obtain version info ({err})', delim='; Please try again later or')
 
         if not is_non_updateable():
             self.ydl.to_screen(f'Current Build Hash {_sha256_file(self.filename)}')
