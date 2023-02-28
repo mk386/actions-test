@@ -138,9 +138,10 @@ class Updater:
 
         self._target_repo = UPDATE_SOURCES.get(self._target_channel)
         if not self._target_repo:
-            self._report_error(f'No channel source for {self._target_channel!r} set, using stable', True)
-            self._target_channel = 'stable'
-            self._target_repo = UPDATE_SOURCES[self._target_channel]
+            # bad_channel = self._target_channel
+            # self._target_channel, self._target_repo = next(iter(UPDATE_SOURCES.items()))
+            # self._report_error(f'No channel source for {bad_channel!r} set, using {self._target_channel}', True)
+            self._report_error(f'No channel source for {self._target_channel!r}', True)
 
     def _version_compare(self, a, b):
         if CHANNEL != self._target_channel:
@@ -243,14 +244,9 @@ class Updater:
         self._report_error(f'Unable to write to {file}; Try running as administrator', True)
 
     def _report_network_error(self, action, delim=None):
-        if self._target_tag.startswith('tags/'):
-            target_tag = f'tag/{self._target_tag[5:]}'
-        else:
-            target_tag = self._target_tag
-        # target_tag = f'tag/{self._target_tag[5:]}' if self._target_tag.startswith('tags/') else self._target_tag
+        target_tag = f'tag/{self._target_tag[5:]}' if self._target_tag.startswith('tags/') else self._target_tag
         url = f'https://github.com/{self._target_repo}/releases/{target_tag}'
-        v = "V" if delim is None else "v"
-        self._report_error(f'Unable to {action}{delim or ";"} {v}isit  {url}', True)
+        self._report_error(f'Unable to {action}{delim or ";"} visit {url}', True)
 
     def check_update(self):
         """Report whether there is an update available"""
