@@ -137,11 +137,6 @@ class Updater:
             self._target_tag = f'tags/{target}' if target and target != 'latest' else 'latest'
 
         self._target_repo = UPDATE_SOURCES.get(self._target_channel)
-        if not self._target_repo:
-            # bad_channel = self._target_channel
-            # self._target_channel, self._target_repo = next(iter(UPDATE_SOURCES.items()))
-            # self._report_error(f'No channel source for {bad_channel!r} set, using {self._target_channel}', True)
-            self._report_error(f'No channel source for {self._target_channel!r}', True)
 
     def _version_compare(self, a, b):
         if CHANNEL != self._target_channel:
@@ -243,33 +238,42 @@ class Updater:
     def _report_permission_error(self, file):
         self._report_error(f'Unable to write to {file}; Try running as administrator', True)
 
-    def _report_network_error(self, action, delim=None):
+    def _report_network_error(self, action, delim=';'):
         target_tag = f'tag/{self._target_tag[5:]}' if self._target_tag.startswith('tags/') else self._target_tag
-        url = f'https://github.com/{self._target_repo}/releases/{target_tag}'
-        self._report_error(f'Unable to {action}{delim or ";"} visit {url}', True)
+        self._report_error(
+            f'Unable to {action}{delim or ";"} visit  '
+            f'https://github.com/{self._target_repo}/releases/{target_tag}', True)
 
     def check_update(self):
         """Report whether there is an update available"""
+        if not self._target_repo:
+            self._report_error(
+                f'No channel source for {self._target_channel!r} set. '
+                f'Valid channels are {", ".join(UPDATE_SOURCES)}')
+            return False
+
         try:
             self.ydl.to_screen(
                 f'Available: {self._target_channel}@{self.latest_version}, Current: {self._full_current_version}')
-            if not self.has_update:
-                if self._target_tag == self._tag:
-                    return self.ydl.to_screen(f'yt-dlp is up to date ({self._full_current_version})')
-            if self._target_tag != self._tag:
-                msg = 'to the specified version' if self._exact else 'any further'
-                msg = f'yt-dlp cannot be updated {msg} since you are on an older Python version'
-                if self._exact:
-                    self._report_error(msg, True)
-                else:
-                    self.ydl.report_warning(msg)
-                return
         except Exception as err:
-            return self._report_network_error(f'obtain version info ({err})', delim='; Please try again later or')
+            self._report_network_error(f'obtain version info ({err})', delim='; Please try again later or')
+            return False
 
-        if not is_non_updateable():
-            self.ydl.to_screen(f'Current Build Hash {_sha256_file(self.filename)}')
-        return True
+        if self.has_update:
+            if not is_non_updateable():
+                self.ydl.to_screen(f'Current Build Hash {_sha256_file(self.filename)}')
+            return True
+
+        if self._target_tag == self._tag:
+            self.ydl.to_screen(f'yt-dlp is up to date ({self._full_current_version})')
+        else:
+            msg = 'to the specified version' if self._exact else 'any further'
+            msg = f'yt-dlp cannot be updated {msg} since you are on an older Python version'
+            if self._exact:
+                self._report_error(msg, True)
+            else:
+                self.ydl.report_warning(msg)
+        return False
 
     def update(self):
         """Update yt-dlp executable to the latest version"""
