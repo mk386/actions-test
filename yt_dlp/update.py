@@ -138,7 +138,7 @@ class Updater:
             self._exact = False
             self._target_tag = 'latest'
         elif self._target_tag != 'latest':
-            self._target_tag = f'tags/{target}'
+            self._target_tag = f'tags/{self._target_tag}'
 
         self._target_repo = UPDATE_SOURCES.get(self._target_channel)
 
