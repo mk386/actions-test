@@ -125,16 +125,20 @@ class Updater:
         if target is None:
             target = CHANNEL
 
-        if target in UPDATE_SOURCES:
-            self._exact = False
-            self._target_channel = target
-            self._target_tag = 'latest'
+        self._target_channel, sep, self._target_tag = target.rpartition('@')
+        if (not sep) and self._target_tag in UPDATE_SOURCES:
+            # Support for `--update-to stable`, should become `--update-to stable@`
+            self._target_channel = self._target_tag
+            self._target_tag = None
 
-        else:
-            self._target_channel, _, target = target.rpartition('@')
-            if not self._target_channel:
-                self._target_channel = CHANNEL
-            self._target_tag = f'tags/{target}' if target and target != 'latest' else 'latest'
+        if not self._target_channel:
+            self._target_channel = CHANNEL
+
+        if not self._target_tag:
+            self._exact = False
+            self._target_tag = 'latest'
+        elif self._target_tag != 'latest':
+            self._target_tag = f'tags/{target}'
 
         self._target_repo = UPDATE_SOURCES.get(self._target_channel)
 
@@ -241,7 +245,7 @@ class Updater:
     def _report_network_error(self, action, delim=';'):
         target_tag = f'tag/{self._target_tag[5:]}' if self._target_tag.startswith('tags/') else self._target_tag
         self._report_error(
-            f'Unable to {action}{delim or ";"} visit  '
+            f'Unable to {action}{delim} visit  '
             f'https://github.com/{self._target_repo}/releases/{target_tag}', True)
 
     def check_update(self):
