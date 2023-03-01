@@ -143,7 +143,7 @@ class Updater:
             self._target_tag = f'tags/{self._target_tag}'
 
         if (WARN_BEFORE_TAG and re.fullmatch(r'(\d+\.?)*\d+', self._target_tag[5:])
-                and version_tuple(self._target_tag) < WARN_BEFORE_TAG):
+                and version_tuple(self._target_tag[5:]) < WARN_BEFORE_TAG):
             self.ydl.report_warning('You are downgrading to a version without --update-to')
 
         self._target_repo = UPDATE_SOURCES.get(self._target_channel)
