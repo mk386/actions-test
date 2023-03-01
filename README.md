@@ -330,6 +330,10 @@ You can also fork the project on GitHub and run your fork's [build workflow](.gi
     --version                       Print program version and exit
     -U, --update                    Update this program to the latest version
     --no-update                     Do not check for updates (default)
+    --update-to CHANNEL_OR_TAG      Check if update to a specific channel is
+                                    available. You cannot update when running
+                                    from source code; Use git to pull the latest
+                                    changes
     -i, --ignore-errors             Ignore download and postprocessing errors.
                                     The download will be considered successful
                                     even if the postprocessing fails
@@ -455,10 +459,10 @@ You can also fork the project on GitHub and run your fork's [build workflow](.gi
                                     SIZE, e.g. 50k or 44.6M
     --date DATE                     Download only videos uploaded on this date.
                                     The date can be "YYYYMMDD" or in the format 
-                                    [now|today|yesterday][-N[day|week|month|year]].
-                                    E.g. "--date today-2weeks" downloads
-                                    only videos uploaded on the same day two
-                                    weeks ago
+                                    [now|today|yesterday][-
+                                    N[day|week|month|year]]. E.g. "--date
+                                    today-2weeks" downloads only videos uploaded
+                                    on the same day two weeks ago
     --datebefore DATE               Download only videos uploaded on or before
                                     this date. The date formats accepted is the
                                     same as --date
@@ -1057,7 +1061,7 @@ You can also fork the project on GitHub and run your fork's [build workflow](.gi
 ## SponsorBlock Options:
 Make chapter entries for, or remove various segments (sponsor,
     introductions, etc.) from downloaded YouTube videos using the
-    [SponsorBlock API](https://sponsor.ajay.app)
+    SponsorBlock API (https://sponsor.ajay.app)
 
     --sponsorblock-mark CATS        SponsorBlock categories to create chapters
                                     for, separated by commas. Available

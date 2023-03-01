@@ -1149,6 +1149,7 @@
  - **RoosterTeethSeries**: [<abbr title="netrc machine"><em>roosterteeth</em></abbr>]
  - **RottenTomatoes**
  - **Rozhlas**
+ - **RozhlasVltava**
  - **RTBF**: [<abbr title="netrc machine"><em>rtbf</em></abbr>]
  - **RTDocumentry**
  - **RTDocumentryPlaylist**
@@ -1658,7 +1659,6 @@
  - **WWE**
  - **wyborcza:video**
  - **WyborczaPodcast**
- - **Xanimu**
  - **XBef**
  - **XboxClips**
  - **XFileShare**: XFileShare based sites: Aparat, ClipWatching, GoUnlimited, GoVid, HolaVid, Streamty, TheVideoBee, Uqload, VidBom, vidlo, VidLocker, VidShare, VUp, WolfStream, XVideoSharing

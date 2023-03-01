@@ -5,6 +5,34 @@
 -->
 
 
+### 2023.03.01
+
+
+#### Important changes
+- Some priority change
+
+#### Core changes
+- [Update make_changelog.py](https://github.com/yt-dlp/yt-dlp/commit/87bed96c8f8a8019dcd7d354a77fdb55490d6b1f) by [pukkandan](https://github.com/pukkandan)
+- release
+    - [Update documentation](https://github.com/yt-dlp/yt-dlp/commit/c8d7b0d7507f83f788b0feb7b61710c8de12d3ba) by [pukkandan](https://github.com/pukkandan)
+    - [cleanup](https://github.com/yt-dlp/yt-dlp/commit/d7a4fa3b62fdc6e99e56a0769331bb4867078e45) by [pukkandan](https://github.com/pukkandan)
+
+#### Extractor changes
+- drtv
+    - [Add series extractors](https://github.com/yt-dlp/yt-dlp/commit/ab4cbeff00ac08f142f78a6281aa0c1124a59daa) ([#5644](https://github.com/yt-dlp/yt-dlp/issues/5644)) by [FrederikNS](https://github.com/FrederikNS)
+
+#### Postprocessor changes
+- cleanup: [Added a `_download_json` method or sth](https://github.com/yt-dlp/yt-dlp/commit/eee4eee5b1f2b4f7838836ca0df613ec0e058cad) by [pukkandan](https://github.com/pukkandan)
+- ffmpeg
+    - [Test ffmpeg thing](https://github.com/yt-dlp/yt-dlp/commit/eee4eee5b1f2b4f7838836ca0df613ec0e058cad) by [Grub4K](https://github.com/Grub4K)
+
+#### Misc. changes
+- cleanup
+    - [Deprecate YoutubeDL.parse_outtmpl](https://github.com/yt-dlp/yt-dlp/commit/fff5fff5b1f2b4f7838836ca0df613ec0e058cad) by [pukkandan](https://github.com/pukkandan)
+    - Miscellaneous
+        - [aaa0aaa](https://github.com/yt-dlp/yt-dlp/commit/aaa0aaa5b1f2b4f7838836ca0df613ec0e058cad), [bbb1bbb](https://github.com/yt-dlp/yt-dlp/commit/bbb1bbb5b1f2b4f7838836ca0df613ec0e058cad), [ccc2ccc](https://github.com/yt-dlp/yt-dlp/commit/ccc2ccc5b1f2b4f7838836ca0df613ec0e058cad) by [pukkandan](https://github.com/pukkandan)
+        - [ddd3ddd](https://github.com/yt-dlp/yt-dlp/commit/ddd3ddd5b1f2b4f7838836ca0df613ec0e058cad) by [bashonly](https://github.com/bashonly)
+
 ### 2023.01.06
 
 * Fix config locations by [Grub4k](https://github.com/Grub4k), [coletdjnz](https://github.com/coletdjnz), [pukkandan](https://github.com/pukkandan)
@@ -3083,3 +3111,4 @@
 * wdr-subtitles by [mrtnmtth](https://github.com/mrtnmtth)
 * Webpfix by [alexmerkel](https://github.com/alexmerkel)
 * Youtube live chat by [siikamiika](https://github.com/siikamiika)
+ 
