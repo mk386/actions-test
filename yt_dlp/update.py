@@ -142,10 +142,6 @@ class Updater:
         elif self._target_tag != 'latest':
             self._target_tag = f'tags/{self._target_tag}'
 
-        if (WARN_BEFORE_TAG and re.fullmatch(r'(\d+\.?)*\d+', self._target_tag[5:])
-                and version_tuple(self._target_tag[5:]) < WARN_BEFORE_TAG):
-            self.ydl.report_warning('You are downgrading to a version without --update-to')
-
         self._target_repo = UPDATE_SOURCES.get(self._target_channel)
 
     def _version_compare(self, a, b, exact=None):
@@ -295,6 +291,9 @@ class Updater:
         if err:
             return self._report_error(err, True)
         self.ydl.to_screen(f'Updating to {self._full_new_version} ...')
+        if (WARN_BEFORE_TAG and re.fullmatch(r'(\d+\.?)*\d+', self._target_tag[5:])
+                and version_tuple(self._target_tag[5:]) < WARN_BEFORE_TAG):
+            self.ydl.report_warning('You are downgrading to a version without --update-to')
 
         directory = os.path.dirname(self.filename)
         if not os.access(self.filename, os.W_OK):
