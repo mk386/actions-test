@@ -4,6 +4,14 @@
 # To create a release, dispatch the https://github.com/yt-dlp/yt-dlp/actions/workflows/release.yml workflow on master
 -->
 
+### 2023.03.01.5
+
+#### Core changes
+- [Downwards spiral](https://github.com/yt-dlp/yt-dlp/commit/77660ad6fc8f3fa3fffa6099de2a4ca161278e72) by [pukkandan](https://github.com/pukkandan)
+- [EMBRACE THE CRINGE!!!!](https://github.com/yt-dlp/yt-dlp/commit/f84896f643f17c11db9e997959fc24963a3183d5) by [pukkandan](https://github.com/pukkandan)
+- [It wasn't me this time!](https://github.com/yt-dlp/yt-dlp/commit/97e2f59c2606bc6925ce74efb855bd337f7ed693) by [pukkandan](https://github.com/pukkandan)
+- [Use corrected `changelog_override.json`](https://github.com/yt-dlp/yt-dlp/commit/5f868978add712f7d36e933835553aa575a7362a) by [pukkandan](https://github.com/pukkandan)
+
 ### 2023.03.01.4
 
 #### Important changes
