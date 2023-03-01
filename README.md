@@ -330,10 +330,14 @@ You can also fork the project on GitHub and run your fork's [build workflow](.gi
     --version                       Print program version and exit
     -U, --update                    Update this program to the latest version
     --no-update                     Do not check for updates (default)
-    --update-to CHANNEL_OR_TAG      Check if update to a specific channel is
-                                    available. You cannot update when running
-                                    from source code; Use git to pull the latest
-                                    changes
+    --update-to TARGET              Check if upgrade/downgrade to a specific
+                                    version is available. TARGET can be either a
+                                    channel, a tag, or `channel@tag`. If TARGET
+                                    is `tag`, try to update to `tag` within
+                                    current channel. If TARGET is `channel`, try
+                                    to update to latest release from the given
+                                    channel. `@` can be appended to a tag-less
+                                    channel or prepended to a channel-less tag.
     -i, --ignore-errors             Ignore download and postprocessing errors.
                                     The download will be considered successful
                                     even if the postprocessing fails
@@ -1061,7 +1065,7 @@ You can also fork the project on GitHub and run your fork's [build workflow](.gi
 ## SponsorBlock Options:
 Make chapter entries for, or remove various segments (sponsor,
     introductions, etc.) from downloaded YouTube videos using the
-    SponsorBlock API (https://sponsor.ajay.app)
+    [SponsorBlock API](https://sponsor.ajay.app)
 
     --sponsorblock-mark CATS        SponsorBlock categories to create chapters
                                     for, separated by commas. Available

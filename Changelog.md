@@ -4,6 +4,33 @@
 # To create a release, dispatch the https://github.com/yt-dlp/yt-dlp/actions/workflows/release.yml workflow on master
 -->
 
+### 2023.03.01.1
+
+#### Important changes
+- Some priority change
+
+#### Core changes
+- [Fix Changelog.md](https://github.com/yt-dlp/yt-dlp/commit/073015f1d77fcb80485b05dff5d30278e1fad0a9) by [pukkandan](https://github.com/pukkandan)
+- [Fix readme generation](https://github.com/yt-dlp/yt-dlp/commit/2e268fb5ec98d223f1d5838447bfb416889c1c13) by [pukkandan](https://github.com/pukkandan)
+- [Update Changelog.md](https://github.com/yt-dlp/yt-dlp/commit/ab637571f61357b13a39998ec9c53b7bdbe2c998) by [pukkandan](https://github.com/pukkandan)
+- release: [Remove extra newline](https://github.com/yt-dlp/yt-dlp/commit/ca9548d110608a9b6302ec50f4dce41456139b15) by [pukkandan](https://github.com/pukkandan)
+
+#### Extractor changes
+- drtv
+    - [Add series extractors](https://github.com/yt-dlp/yt-dlp/commit/ab4cbeff00ac08f142f78a6281aa0c1124a59daa) ([#5644](https://github.com/yt-dlp/yt-dlp/issues/5644)) by [FrederikNS](https://github.com/FrederikNS)
+
+#### Postprocessor changes
+- cleanup: [Added a `_download_json` method or sth](https://github.com/yt-dlp/yt-dlp/commit/eee4eee5b1f2b4f7838836ca0df613ec0e058cad) by [pukkandan](https://github.com/pukkandan)
+- ffmpeg
+    - [Test ffmpeg thing](https://github.com/yt-dlp/yt-dlp/commit/eee4eee5b1f2b4f7838836ca0df613ec0e058cad) by [Grub4K](https://github.com/Grub4K)
+
+#### Misc. changes
+- cleanup
+    - [Deprecate YoutubeDL.parse_outtmpl](https://github.com/yt-dlp/yt-dlp/commit/fff5fff5b1f2b4f7838836ca0df613ec0e058cad) by [pukkandan](https://github.com/pukkandan)
+    - Miscellaneous
+        - [aaa0aaa](https://github.com/yt-dlp/yt-dlp/commit/aaa0aaa5b1f2b4f7838836ca0df613ec0e058cad), [bbb1bbb](https://github.com/yt-dlp/yt-dlp/commit/bbb1bbb5b1f2b4f7838836ca0df613ec0e058cad), [ccc2ccc](https://github.com/yt-dlp/yt-dlp/commit/ccc2ccc5b1f2b4f7838836ca0df613ec0e058cad) by [pukkandan](https://github.com/pukkandan)
+        - [ddd3ddd](https://github.com/yt-dlp/yt-dlp/commit/ddd3ddd5b1f2b4f7838836ca0df613ec0e058cad) by [bashonly](https://github.com/bashonly)
+
 ### 2023.02.17
 
 * Merge youtube-dl: Upto [commit/2dd6c6e](https://github.com/ytdl-org/youtube-dl/commit/2dd6c6e)
