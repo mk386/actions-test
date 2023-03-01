@@ -4,6 +4,34 @@
 # To create a release, dispatch the https://github.com/yt-dlp/yt-dlp/actions/workflows/release.yml workflow on master
 -->
 
+### 2023.03.01.3
+
+#### Important changes
+- Some priority change
+
+#### Core changes
+- [Additional fork note in README.md](https://github.com/yt-dlp/yt-dlp/commit/60dcb91a1f8953ef6ceb218019fc6de5fab924eb) by [pukkandan](https://github.com/pukkandan)
+- update
+    - [Apply suggestions from code review](https://github.com/yt-dlp/yt-dlp/commit/2f9044655fe35a114bf34930be83de2ae99eb93e) by [pukkandan](https://github.com/pukkandan)
+
+#### Extractor changes
+- drtv
+    - [Add series extractors](https://github.com/yt-dlp/yt-dlp/commit/ab4cbeff00ac08f142f78a6281aa0c1124a59daa) ([#5644](https://github.com/yt-dlp/yt-dlp/issues/5644)) by [FrederikNS](https://github.com/FrederikNS)
+
+#### Postprocessor changes
+- cleanup: [Added a `_download_json` method or sth](https://github.com/yt-dlp/yt-dlp/commit/eee4eee5b1f2b4f7838836ca0df613ec0e058cad) by [pukkandan](https://github.com/pukkandan)
+- ffmpeg
+    - [Test ffmpeg thing](https://github.com/yt-dlp/yt-dlp/commit/eee4eee5b1f2b4f7838836ca0df613ec0e058cad) by [Grub4K](https://github.com/Grub4K)
+
+#### Misc. changes
+- cleanup
+    - [Deprecate YoutubeDL.parse_outtmpl](https://github.com/yt-dlp/yt-dlp/commit/fff5fff5b1f2b4f7838836ca0df613ec0e058cad) by [pukkandan](https://github.com/pukkandan)
+    - Miscellaneous
+        - [aaa0aaa](https://github.com/yt-dlp/yt-dlp/commit/aaa0aaa5b1f2b4f7838836ca0df613ec0e058cad), [bbb1bbb](https://github.com/yt-dlp/yt-dlp/commit/bbb1bbb5b1f2b4f7838836ca0df613ec0e058cad), [ccc2ccc](https://github.com/yt-dlp/yt-dlp/commit/ccc2ccc5b1f2b4f7838836ca0df613ec0e058cad) by [pukkandan](https://github.com/pukkandan)
+        - [ddd3ddd](https://github.com/yt-dlp/yt-dlp/commit/ddd3ddd5b1f2b4f7838836ca0df613ec0e058cad) by [bashonly](https://github.com/bashonly)
+- docs
+    - [Update `README.md`](https://github.com/yt-dlp/yt-dlp/commit/7e08153b0d213dceded09c9da3e23e799a604708) by [pukkandan](https://github.com/pukkandan)
+
 ### 2023.03.01.2
 
 #### Important changes

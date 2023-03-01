@@ -379,6 +379,7 @@ Additionally, you may want to add your a channel for your repository in `yt_dlp.
                                     to update to latest release from the given
                                     channel. `@` can be appended to a tag-less
                                     channel or prepended to a channel-less tag.
+                                    Supported channels: stable, nightly
     -i, --ignore-errors             Ignore download and postprocessing errors.
                                     The download will be considered successful
                                     even if the postprocessing fails
