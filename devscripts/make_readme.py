@@ -45,21 +45,23 @@ switch_col_width = len(re.search(r'(?m)^\s{5,}', options).group())
 delim = f'\n{" " * switch_col_width}'
 
 PATCHES = (
-    (   # Standardize update message
+    (   # Standardize `--update` message
         r'(?m)^(    -U, --update\s+).+(\n    \s.+)*$',
         r'\1Update this program to the latest version',
     ),
-    (   # Standardize update-to message
-        r'(?m)^(    --update-to TARGET[^.]+\. )[^.]+\. ',
-        r'\1',
+    (   # Standardize `--update-to` message
+        r'(?m)^(    --update-to TARGET\s+)[^.]+\. [^.]+\. ',
+        rf'\1Upgrade/downgrade this program to a{delim}specific version. ',
     ),
     (   # Headings
         r'(?m)^  (\w.+\n)(    (?=\w))?',
         r'## \1'
     ),
     (   # Fixup `--date` formatting
-        rf'{delim}\]\]\. ',
-        f']].{delim}',
+        rf'(?m)(    --date DATE.+({delim}[^\[]+)*)\[.+({delim}.+)*$',
+        (rf'\1[now|today|yesterday][-N[day|week|month|year]].{delim}'
+         f'E.g. "--date today-2weeks" downloads only{delim}'
+         'videos uploaded on the same day two weeks ago'),
     ),
     (   # Do not split URLs
         rf'({delim[:-1]})? (?P<label>\[\S+\] )?(?P<url>https?({delim})?:({delim})?/({delim})?/(({delim})?\S+)+)\s',
@@ -80,7 +82,7 @@ PATCHES = (
         r'(?m)^(\s{4}-.{%d})(%s)' % (switch_col_width - 6, delim),
         r'\1 '
     ),
-    (   # Replace with a Markdown link
+    (   # Replace brackets with a Markdown link
         r'SponsorBlock API \((http.+)\)',
         r'[SponsorBlock API](\1)'
     ),

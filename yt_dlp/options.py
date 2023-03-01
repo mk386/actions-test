@@ -331,17 +331,16 @@ def create_parser():
         '--no-update',
         action='store_false', dest='update_self',
         help='Do not check for updates (default)')
-    update_to_help_field = (
-        'TARGET can be either a channel, a tag, or `channel@tag`. '
-        'If TARGET is `tag`, try to update to `tag` within current channel. '
-        'If TARGET is `channel`, try to update to latest release from the given channel. '
-        '`@` can be appended to a tag-less channel or prepended to a channel-less tag.')
     general.add_option(
         '--update-to',
         action='store', dest='update_self', metavar='TARGET',
         help=format_field(
-            is_non_updateable(), None, f'Check if upgrade/downgrade to a specific version is available. %s. {update_to_help_field}',
-            default=f'Upgrade/downgrade the program to a specific version. {update_to_help_field}'))
+            is_non_updateable(), None, 'Check if upgrade/downgrade to a specific version is available. %s. ',
+            default='Upgrade/downgrade this program to a specific version. ') + (
+                'TARGET can be either a channel, a tag, or `channel@tag`. '
+                'If TARGET is `tag`, try to update to `tag` within current channel. '
+                'If TARGET is `channel`, try to update to latest release from the given channel. '
+                '`@` can be appended to a tag-less channel or prepended to a channel-less tag.'))
     general.add_option(
         '-i', '--ignore-errors',
         action='store_true', dest='ignoreerrors',
