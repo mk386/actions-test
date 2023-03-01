@@ -28,7 +28,11 @@ UPDATE_SOURCES = {
     'stable': 'Grub4K/actions-test',
     'nightly': 'Grub4K/actions-archive-test',
 }
-WARN_BEFORE_TAG = (2023, 3, 2)
+# If set, updating to versions before _CHANNEL_CUTOFF warns about no `--update-to`
+_CHANNEL_CUTOFF = (2023, 3, 2)
+
+_VERSION_RE = re.compile(r'(\d+\.?)*\d+')
+
 API_BASE_URL = 'https://api.github.com/repos'
 
 # Backwards compatibility variables for the current channel
@@ -144,17 +148,14 @@ class Updater:
 
         self._target_repo = UPDATE_SOURCES.get(self._target_channel)
 
-    def _version_compare(self, a, b, exact=None):
-        if exact is None:
-            if CHANNEL != self._target_channel:
-                return False
-            exact = self._exact
+    def _version_compare(self, a, b, channel=True):
+        if channel and CHANNEL != self._target_channel:
+            return False
 
-        try:
+        if _VERSION_RE.fullmatch(f'{a}.{b}'):
             a, b = version_tuple(a), version_tuple(b)
-            return a == b if exact else a >= b
-        except ValueError:
-            return a == b
+            return a == b if self._exact else a >= b
+        return a == b
 
     @functools.cached_property
     def _tag(self):
@@ -167,7 +168,7 @@ class Updater:
                 continue
             _, tag, pattern = line.split(' ', 2)
             if re.match(pattern, identifier):
-                if self._target_tag != 'latest' and self._version_compare(tag, self._target_tag[5:], exact=False):
+                if self._target_tag != 'latest' and self._version_compare(tag, self._target_tag[5:], channel=False):
                     continue
 
                 return f'tags/{tag}'
@@ -291,8 +292,8 @@ class Updater:
         if err:
             return self._report_error(err, True)
         self.ydl.to_screen(f'Updating to {self._full_new_version} ...')
-        if (WARN_BEFORE_TAG and re.fullmatch(r'(\d+\.?)*\d+', self._target_tag[5:])
-                and version_tuple(self._target_tag[5:]) < WARN_BEFORE_TAG):
+        if (_CHANNEL_CUTOFF and _VERSION_RE.fullmatch(self._target_tag[5:])
+                and version_tuple(self._target_tag[5:]) < _CHANNEL_CUTOFF):
             self.ydl.report_warning('You are downgrading to a version without --update-to')
 
         directory = os.path.dirname(self.filename)
