@@ -28,6 +28,7 @@ UPDATE_SOURCES = {
     'stable': 'Grub4K/actions-test',
     'nightly': 'Grub4K/actions-archive-test',
 }
+WARN_BEFORE_TAG = (2023, 3, 2)
 API_BASE_URL = 'https://api.github.com/repos'
 
 # Backwards compatibility variables for the current channel
@@ -126,8 +127,9 @@ class Updater:
             target = CHANNEL
 
         self._target_channel, sep, self._target_tag = target.rpartition('@')
+        # Support for `--update-to stable`
+        # It should become `stable@` and not `@stable`
         if (not sep) and self._target_tag in UPDATE_SOURCES:
-            # Support for `--update-to stable`, should become `--update-to stable@`
             self._target_channel = self._target_tag
             self._target_tag = None
 
@@ -139,6 +141,10 @@ class Updater:
             self._target_tag = 'latest'
         elif self._target_tag != 'latest':
             self._target_tag = f'tags/{self._target_tag}'
+
+        if (WARN_BEFORE_TAG and re.fullmatch(r'(\d+\.?)*\d+', self._target_tag[5:])
+                and version_tuple(self._target_tag) < WARN_BEFORE_TAG):
+            self.ydl.report_warning('You are downgrading to a version without --update-to')
 
         self._target_repo = UPDATE_SOURCES.get(self._target_channel)
 
@@ -160,9 +166,13 @@ class Updater:
                 continue
             _, tag, pattern = line.split(' ', 2)
             if re.match(pattern, identifier):
-                with contextlib.suppress(ValueError):
-                    if version_tuple(tag) >= version_tuple(self._target_tag[5:]):
-                        return self._target_tag
+                if self._target_tag != 'latest':
+                    try:
+                        if version_tuple(tag) >= version_tuple(self._target_tag[5:]):
+                            continue
+                    except ValueError:
+                        pass
+
                 return f'tags/{tag}'
         return self._target_tag
 
@@ -262,7 +272,7 @@ class Updater:
 
         if self.has_update:
             if not is_non_updateable():
-                self.ydl.to_screen(f'Current Build Hash {_sha256_file(self.filename)}')
+                self.ydl.to_screen(f'Current Build Hash: {_sha256_file(self.filename)}')
             return True
 
         if self._target_tag == self._tag:
