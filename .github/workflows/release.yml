@@ -32,7 +32,6 @@ jobs:
           make doc
           sed '/### /Q' Changelog.md >> ./CHANGELOG
           echo '### ${{ steps.update_version.outputs.version }}' >> ./CHANGELOG
-          echo >> ./CHANGELOG
           python ./devscripts/make_changelog.py -vv -c >> ./CHANGELOG
           echo >> ./CHANGELOG
           grep -Poz '(?s)### \d+\.\d+\.\d+.+' Changelog.md >> ./CHANGELOG
