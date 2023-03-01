@@ -148,12 +148,17 @@ class Updater:
 
         self._target_repo = UPDATE_SOURCES.get(self._target_channel)
 
-    def _version_compare(self, a, b):
-        if CHANNEL != self._target_channel:
-            return False
+    def _version_compare(self, a, b, exact=None):
+        if exact is None:
+            if CHANNEL != self._target_channel:
+                return False
+            exact = self._exact
 
-        a, b = version_tuple(a), version_tuple(b)
-        return a == b if self._exact else a >= b
+        try:
+            a, b = version_tuple(a), version_tuple(b)
+            return a == b if exact else a >= b
+        except ValueError:
+            return a == b
 
     @functools.cached_property
     def _tag(self):
@@ -166,12 +171,8 @@ class Updater:
                 continue
             _, tag, pattern = line.split(' ', 2)
             if re.match(pattern, identifier):
-                if self._target_tag != 'latest':
-                    try:
-                        if version_tuple(tag) >= version_tuple(self._target_tag[5:]):
-                            continue
-                    except ValueError:
-                        pass
+                if self._target_tag != 'latest' and self._version_compare(tag, self._target_tag[5:], exact=False):
+                    continue
 
                 return f'tags/{tag}'
         return self._target_tag
