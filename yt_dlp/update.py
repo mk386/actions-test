@@ -155,13 +155,14 @@ class Updater:
             return self._target_tag
 
         identifier = f'{detect_variant()} {self._target_channel} {system_identifier()}'
-        for line in self._download('_update_spec', self._target_tag).decode().splitlines():
+        for line in self._download('_update_spec', 'latest').decode().splitlines():
             if not line.startswith('lock '):
                 continue
             _, tag, pattern = line.split(' ', 2)
             if re.match(pattern, identifier):
-                if self._target_tag != 'latest' and version_tuple(tag) > version_tuple(self._target_tag[5:]):
-                    return self._target_tag
+                with contextlib.suppress(ValueError):
+                    if version_tuple(tag) >= version_tuple(self._target_tag[5:]):
+                        return self._target_tag
                 return f'tags/{tag}'
         return self._target_tag
 
