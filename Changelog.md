@@ -4,9 +4,7 @@
 # To create a release, dispatch the https://github.com/yt-dlp/yt-dlp/actions/workflows/release.yml workflow on master
 -->
 
-
 ### 2023.03.01
-
 
 #### Important changes
 - Some priority change
@@ -3111,4 +3109,4 @@
 * wdr-subtitles by [mrtnmtth](https://github.com/mrtnmtth)
 * Webpfix by [alexmerkel](https://github.com/alexmerkel)
 * Youtube live chat by [siikamiika](https://github.com/siikamiika)
- 
+�
