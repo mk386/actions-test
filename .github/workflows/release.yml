@@ -34,7 +34,7 @@ jobs:
           echo '### ${{ steps.update_version.outputs.version }}' >> ./CHANGELOG
           python ./devscripts/make_changelog.py -vv -c >> ./CHANGELOG
           echo >> ./CHANGELOG
-          grep -Poz '(?s)### \d+\.\d+\.\d+.+' Changelog.md >> ./CHANGELOG
+          grep -Poz '(?s)### \d+\.\d+\.\d+.+' 'Changelog.md' | head -n -1 >> ./CHANGELOG
           cat ./CHANGELOG > Changelog.md
 
       - name: Push to release
