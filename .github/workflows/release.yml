@@ -9,7 +9,7 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.update-version.outputs.version }}
+      version: ${{ steps.update_version.outputs.version }}
       head_sha: ${{ steps.push_release.outputs.head_sha }}
 
     steps:
@@ -22,7 +22,7 @@ jobs:
           python-version: "3.10"
 
       - name: Update version
-        id: update-version
+        id: update_version
         run: |
           python devscripts/update-version.py ${{ vars.PUSH_VERSION_COMMIT == '' && '"$(date -u +"%H%M%S")"' || '' }} | \
             grep -Po "version=\d+\.\d+\.\d+(\.\d+)?" >> "$GITHUB_OUTPUT"
@@ -30,9 +30,11 @@ jobs:
       - name: Update documentation
         run: |
           make doc
-          sed "/### /Q" Changelog.md >> ./CHANGELOG
-          echo -e "### ${{ steps.update-version.outputs.version }}\n" >> ./CHANGELOG
+          sed '/### /Q' Changelog.md >> ./CHANGELOG
+          echo '### ${{ steps.update_version.outputs.version }}' >> ./CHANGELOG
+          echo >> ./CHANGELOG
           python ./devscripts/make_changelog.py -vv -c >> ./CHANGELOG
+          echo >> ./CHANGELOG
           grep -Poz '(?s)### \d+\.\d+\.\d+.+' Changelog.md >> ./CHANGELOG
           cat ./CHANGELOG > Changelog.md
 
@@ -42,7 +44,8 @@ jobs:
           git config --global user.name github-actions
           git config --global user.email github-actions@example.com
           git add -u
-          git commit -m "[version] update" -m "Created by: ${{ github.event.sender.login }}" -m ":ci skip all :ci run dl"
+          git commit -m "Release ${{ steps.update_version.outputs.version }}" \
+            -m "Created by: ${{ github.event.sender.login }}" -m ":ci skip all :ci run dl"
           git push origin --force ${{ github.event.ref }}:release
           echo "head_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
