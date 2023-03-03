@@ -4,6 +4,13 @@
 # To create a release, dispatch the https://github.com/yt-dlp/yt-dlp/actions/workflows/release.yml workflow on master
 -->
 
+### 2023.03.03
+
+#### Core changes
+- [Testing pukkandan's patch](https://github.com/yt-dlp/yt-dlp/commit/30ab5490a1d5f973eaf72c673b076c00e9e34a4d) by [pukkandan](https://github.com/pukkandan)
+- update
+    - [Fix regex typo](https://github.com/yt-dlp/yt-dlp/commit/8011aa3b60650c704ccdeb7e0d6656a4e64bdd08) by [pukkandan](https://github.com/pukkandan)
+
 ### 2023.03.01.7
 
 #### Core changes
