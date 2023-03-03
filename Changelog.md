@@ -94,6 +94,7 @@
 * [extractor/zdf] Use android API endpoint for UHD downloads by [seproDev](https://github.com/seproDev)
 * [extractor/drtv] Fix bug in [ab4cbef](https://github.com/yt-dlp/yt-dlp/commit/ab4cbef) by [bashonly](https://github.com/bashonly)
 
+
 ### 2023.01.06
 
 * Fix config locations by [Grub4k](https://github.com/Grub4k), [coletdjnz](https://github.com/coletdjnz), [pukkandan](https://github.com/pukkandan)
