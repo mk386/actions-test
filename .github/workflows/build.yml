@@ -100,8 +100,13 @@ jobs:
           python -m pip install -U pip setuptools wheel
           python -m pip install -U Pyinstaller -r requirements.txt
           reqs=$(mktemp)
-          echo -e 'python=3.10.*\npyinstaller' >$reqs
-          sed 's/^brotli.*/brotli-python/' <requirements.txt >>$reqs
+          cat > $reqs << EOF
+          python=3.10.*
+          pyinstaller
+          cffi
+          brotli-python
+          EOF
+          sed '/^brotli.*/d' requirements.txt >> $reqs
           mamba create -n build --file $reqs
 
       - name: Prepare
@@ -157,8 +162,7 @@ jobs:
           arch: ${{ matrix.architecture }}
           distro: ubuntu18.04 # Standalone executable should be built on minimum supported OS
           dockerRunArgs: --volume "${PWD}/repo:/repo"
-          install: |
-            # Installing Python 3.10 from the Deadsnakes repo raises errors
+          install: | # Installing Python 3.10 from the Deadsnakes repo raises errors
             apt update
             apt -y install zlib1g-dev python3.8 python3.8-dev python3.8-distutils python3-pip
             python3.8 -m pip install -U pip setuptools wheel
@@ -255,10 +259,9 @@ jobs:
         with: # 3.8 is used for Win7 support
           python-version: "3.8"
       - name: Install Requirements
-        run: |
-          # Custom pyinstaller built with https://github.com/yt-dlp/pyinstaller-builds
+        run: | # Custom pyinstaller built with https://github.com/yt-dlp/pyinstaller-builds
           python -m pip install -U pip setuptools wheel py2exe
-          pip install -U "https://yt-dlp.github.io/Pyinstaller-Builds/x86_64/pyinstaller-5.3-py3-none-any.whl" -r requirements.txt
+          pip install -U "https://yt-dlp.github.io/Pyinstaller-Builds/x86_64/pyinstaller-5.8.0-py3-none-any.whl" -r requirements.txt
 
       - name: Prepare
         run: |
@@ -293,7 +296,7 @@ jobs:
       - name: Install Requirements
         run: |
           python -m pip install -U pip setuptools wheel
-          pip install -U "https://yt-dlp.github.io/Pyinstaller-Builds/i686/pyinstaller-5.3-py3-none-any.whl" -r requirements.txt
+          pip install -U "https://yt-dlp.github.io/Pyinstaller-Builds/i686/pyinstaller-5.8.0-py3-none-any.whl" -r requirements.txt
 
       - name: Prepare
         run: |
@@ -332,7 +335,7 @@ jobs:
         run: |
           cat >> _update_spec << EOF
           # This file is used for regulating self-update
-          lock 2022.07.18 .+ Python 3.6
+          lock 2022.08.18.36 .+ Python 3.6
           EOF
 
       - name: Sign checksum files

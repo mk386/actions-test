@@ -196,7 +196,7 @@ class Changelog:
         if info.fixes:
             fix_message = ', '.join(f'{self._format_message_link(None, fix.hash)}' for fix in info.fixes)
 
-            authors = sorted(set(author for fix in info.fixes for author in fix.authors), key=str.casefold)
+            authors = sorted({author for fix in info.fixes for author in fix.authors}, key=str.casefold)
             if authors != info.commit.authors:
                 fix_message = f'{fix_message} by {self._format_authors(authors)}'
 
@@ -235,7 +235,7 @@ class CommitRange:
         (?:`?(?P<sub_details_alt>[^:`]+)`?: )?
         (?P<message>.+?)
         (?:\ \((?P<issues>\#\d+(?:,\ \#\d+)*)\))?
-        ''', re.VERBOSE)
+        ''', re.VERBOSE | re.DOTALL)
     EXTRACTOR_INDICATOR_RE = re.compile(r'(?:Fix|Add)\s+Extractors?', re.IGNORECASE)
     FIXES_RE = re.compile(r'(?i:Fix(?:es)?(?:\s+for)?|Revert)\s+([\da-f]{40})')
     UPSTREAM_MERGE_RE = re.compile(r'Update to ytdl-commit-([\da-f]+)')
