@@ -5,6 +5,13 @@
 -->
 
 
+### 2023.03.04
+
+#### Core changes
+- [ONE LAST NIGHTLY](https://github.com/yt-dlp/yt-dlp/commit/d336812ba84bb0ebe183cd5c900f407e74bf4e5a) by [pukkandan](https://github.com/pukkandan)
+- [Summary (required)](https://github.com/yt-dlp/yt-dlp/commit/d5b358e7c6a786d2d315fb0e40021730c44f786a) by [pukkandan](https://github.com/pukkandan)
+- [Update __init__.py](https://github.com/yt-dlp/yt-dlp/commit/6c9a186f9aaba611c3de39ff779cbe1d51413a64) by [pukkandan](https://github.com/pukkandan)
+
 ### 2023.03.03.1
 
 - [Merge up to youtube-dl 2dd6c6e](https://github.com/yt-dlp/yt-dlp/commit/45b2ee6f4fae139892a1a4335c269dcbb6671497) by [pukkandan](https://github.com/pukkandan)
